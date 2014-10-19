@@ -16,13 +16,24 @@ use Catalyst::Runtime 5.80;
 # Static::Simple: will serve static files from the application's root
 #                 directory
 
+# Load plugins
 use Catalyst qw/
-    -Debug
-    ConfigLoader
-    Static::Simple
-
-    StackTrace
+        -Debug
+        ConfigLoader
+        Static::Simple
+    
+        StackTrace
+    
+        Authentication
+    
+        Session
+        Session::Store::File
+        Session::State::Cookie
+    
+        StatusMessage
 /;
+
+
 
 extends 'Catalyst';
 
@@ -52,6 +63,17 @@ __PACKAGE__->config(
         INCLUDE_PATH => [
             __PACKAGE__->path_to( 'root', 'src' ),
         ],
+    },
+);
+
+# Configure SimpleDB Authentication
+__PACKAGE__->config(
+    'Plugin::Authentication' => {
+	default => {
+	    class           => 'SimpleDB',
+	    user_model      => 'DB::User',
+	    password_type   => 'clear',
+	},
     },
 );
 
