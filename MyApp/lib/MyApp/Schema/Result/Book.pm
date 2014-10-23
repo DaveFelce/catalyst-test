@@ -134,8 +134,18 @@ __PACKAGE__->add_columns(
 );
 
 
-
-
+=head2 delete_allowed_by
+ 
+Can the specified user delete the current book?
+ 
+=cut
+ 
+sub delete_allowed_by {
+    my ($self, $user) = @_;
+ 
+    # Only allow delete if user has 'admin' role
+    return $user->has_role('admin');
+}
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
