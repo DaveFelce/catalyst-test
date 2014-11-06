@@ -59,6 +59,8 @@ sub list :Chained('base') :PathPart('list') :Args(0) {
     # that make up the application
     my ($self, $c) = @_;
 
+    $DB::single = 1;
+
     # Retrieve all of the book records as book model objects and store
     # in the stash where they can be accessed by the TT template
     $c->stash(books => [$c->model('DB::Book')->all]);
